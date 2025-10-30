@@ -1,0 +1,58 @@
+/* Import the Urbanist font (if you haven't already in your main index.css) */
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700&display=swap');
+
+/* Main container padding to match Tailwind's responsive values */
+.main-container {
+  padding-top: 3rem; /* py-12 */
+  padding-bottom: 3rem; /* py-12 */
+  padding-left: 1.5rem; /* px-6 */
+  padding-right: 1.5rem; /* px-6 */
+  height: calc(100vh - 65px);
+  overflow: auto;
+  width: 100vw;
+}
+
+@media (min-width: 1024px) { /* lg breakpoint */
+  .main-container {
+    padding-left: 2rem; /* lg:px-8 */
+    padding-right: 2rem; /* lg:px-8 */
+  }
+}
+
+/* Custom card styling for both NewsCard and Skeleton Card */
+/* This replaces `rounded-[10px] border border-[#E5E5E5]` */
+.custom-card {
+  border-radius: 10px !important;
+  border: 1px solid #E5E5E5 !important;
+  background-color: #ffffff;
+  /* Override MUI's default shadow for a flat design */
+  box-shadow: none !important;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Specific height for skeleton cards */
+.skeleton-card {
+    height: 24rem; /* h-96 */
+    overflow: hidden;
+}
+
+/* Text styles matching font-urbanist and text sizes */
+.empty-state-text {
+  font-family: 'Urbanist', sans-serif !important;
+  font-size: 16px !important;
+}
+
+/* --- Dark Mode Styles --- */
+/* This mimics Tailwind's `dark:` prefix */
+@media (prefers-color-scheme: dark) {
+  .custom-card {
+    background-color: #1E1E1E !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /*
+    Note: MUI's own components like <Alert> and <Typography color="text.secondary">
+    will adapt to dark mode automatically if you use MUI's ThemeProvider.
+    These explicit styles are for custom components that need to match.
+  */
+}

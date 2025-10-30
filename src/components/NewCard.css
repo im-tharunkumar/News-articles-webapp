@@ -1,0 +1,58 @@
+/*
+  Define the custom fonts you're using.
+  You should import these in your main app entry point (e.g., index.css or App.js).
+*/
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@700&display=swap');
+
+/* 
+  Replicates the `line-clamp` utility. This is the standard CSS way to do it.
+*/
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 
+  Custom hover effect classes. You can define `card-hover` and `card-shadow`
+  to match your project's design system. Here are some common examples.
+*/
+.card-hover {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+}
+
+/* A subtle shadow that appears on hover */
+.card-shadow:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Dark mode specific shadow */
+@media (prefers-color-scheme: dark) {
+  .card-shadow:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+  }
+}
+
+/* Style for the "Read More" button's arrow */
+.cta-button {
+  transition: color 0.2s ease;
+}
+
+.news-card{
+    width: 100%;
+}
