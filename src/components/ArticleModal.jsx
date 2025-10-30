@@ -12,7 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import ImagePreview from "./ImagePreview";
 
 
-const images = import.meta.glob('/src/assets/images/*.{png,jpg,jpeg,svg,gif}', { eager: true });
+const images = import.meta.glob('../assets/Images/*.(png|jpg|jpeg|svg|gif)', { eager: true });
 
 // Convert to simpler object with just filenames as keys
 const imageMap = {};
@@ -26,7 +26,7 @@ console.log(imageMap)
 const getImage = (filename) => {
   return imageMap[filename] || null;
 };
-
+// const getImage = (filename) => `public\Images/images/${filename}`
 
 // Or as an array
 // const imageArray = importAll(require.context('./images', false, /\.(png|jpe?g|svg)$/));
