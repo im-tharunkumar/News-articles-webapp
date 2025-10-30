@@ -11,18 +11,6 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import ImagePreview from "./ImagePreview";
 
-// function importAll(r) {
-//   let images = {};
-//   r.keys().map((item, index) => {
-//     images[item.replace('./', '')] = r(item);
-//   });
-//   return images;
-// }
-
-// const images = importAll(require.context('../assets/images', false, /\.(png|jpe?g)$/));
-// export const getImage = (filename) => {
-//   return images[filename] || null;
-// };
 
 const images = import.meta.glob('../assets/images/*.(png|jpg|jpeg|svg|gif)', { eager: true });
 
@@ -38,18 +26,12 @@ const getImage = (filename) => {
   return imageMap[filename] || null;
 };
 
-console.log(images)
 
 // Or as an array
 // const imageArray = importAll(require.context('./images', false, /\.(png|jpe?g|svg)$/));
 export default function ArticleModal({open, article, onClose }) {
 
   const imageSrc = getImage(article?.filename);
-
-  if (!imageSrc) {
-    // Return fallback image or placeholder
-    return  <div>Image not found: {article?.filename}</div>;
-  }
 
   const [scale, setScale] = useState(1); // Zoom level
   const [rotation, setRotation] = useState(0); // Rotation angle in degrees
@@ -84,33 +66,6 @@ export default function ArticleModal({open, article, onClose }) {
     maxHeight: '100%',
     display: 'block',
     margin: '0 auto',
-  };
-
-  const containerStyles = {
-    width: '400px',
-    height: '100%',
-    border: '1px solid #ccc',
-    overflow: 'hidden',
-    position: 'relative',
-    backgroundColor: '#f9f9f9',
-    // display: 'flex',
-    // alignItems: 'center',
-    justifyContent: 'center',
-    // margin: '1rem auto',
-  };
-
-  const controlsStyles = {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '10px',
-    height:"50px"
-  };
-
-  const buttonStyles = {
-    padding: '5px 10px',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    cursor: 'pointer',
   };
 
   return (
@@ -191,7 +146,7 @@ export default function ArticleModal({open, article, onClose }) {
                 <div style={{ display: "flex"}}>
         {/* Title */}
 
-        <div style={{width:"70%", height:"450px" , overflow:"auto"}}> 
+        <div style={{width:imageSrc?"63%" : "100%", height:"450px" , overflow:"auto"}}> 
         {/* Metadata */}
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 1 }}>
           {article?.category && (
@@ -289,23 +244,9 @@ export default function ArticleModal({open, article, onClose }) {
           </>
         )}
         </div>
-        {/* <div style={containerStyles}>
-        <div style={controlsStyles}>
-        <button style={buttonStyles} onClick={handleZoomIn}>Zoom In</button>
-        <button style={buttonStyles} onClick={handleZoomOut}>Zoom Out</button>
-        <button style={buttonStyles} onClick={handleRotateLeft}>⟲ Rotate Left</button>
-        <button style={buttonStyles} onClick={handleRotateRight}>⟳ Rotate Right</button>
-        <button style={buttonStyles} onClick={handleReset}>Reset</button>
-      </div>
-        <img 
-          src={imageSrc} 
-          alt={article?.filename || "image"} 
-          style={imageStyles}
-        />
-      </div> */}
 
-      <ImagePreview handleRotateLeft={handleRotateLeft} handleRotateRight={handleRotateRight} handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} handleReset={handleReset} article={article} imageSrc={imageSrc} imageStyles={imageStyles}/>
-
+{imageSrc &&      <ImagePreview handleRotateLeft={handleRotateLeft} handleRotateRight={handleRotateRight} handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} handleReset={handleReset} article={article} imageSrc={imageSrc} imageStyles={imageStyles}/>
+}
 
 
       </div>
@@ -313,3 +254,5 @@ export default function ArticleModal({open, article, onClose }) {
     </Dialog>
   );
 }
+
+ 

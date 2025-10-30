@@ -59,19 +59,19 @@ const Index = () => {
 
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 3000);
   }, [selectedVarient]);
 
 
   const filteredNews = useMemo(() => {
     if (!searchQuery.trim()) return mainSource;
-    
+
     const query = searchQuery.toLowerCase();
     return mainSource.filter(
       (article) =>
-        article?.headline?.toLowerCase().includes(query) ||
-        article?.news?.toLowerCase().includes(query)||
-        article?.category?.toLowerCase().includes(query)
+        article.headline.toLowerCase().includes(query) ||
+        article.news.toLowerCase().includes(query)||
+        article.category.toLowerCase().includes(query)
     );
   }, [searchQuery, mainSource]);
 
@@ -87,22 +87,10 @@ const Index = () => {
       sx={{background:"#f9f9f9"}}
       className="main-container"
     >
-      {/* Error State */}
-      {/* {error && (
-        // <Alert> is the semantic equivalent for an error message box.
-        <Alert severity="error" sx={{ mb: 4 }}>
-          {error}
-        </Alert>
-      )} */}
-
-      {/* Loading State */}
       {loading ? (
-        // <Grid container> replaces `grid`. `spacing` replaces `gap`.
-        // gap-6 (1.5rem / 24px) -> spacing={3} (3 * 8px = 24px)
+
         <Grid container spacing={3}>
           {[...Array(4)].map((_, i) => (
-            // Grid items define column spans for different breakpoints.
-            // xs=12 (1 col), md=6 (2 cols), lg=4 (3 cols)
             <Grid item xs={12} md={6} lg={4} key={i}>
               <Card className="custom-card skeleton-card" style={{width:"300px "}}>
                 {/* <Skeleton> components replace the animated pulse divs */}
@@ -117,14 +105,6 @@ const Index = () => {
           ))}
         </Grid>
       ) : 
-      // articles.length === 0 ? (
-      //   // Empty State
-      //   <Box sx={{ textAlign: 'center', py: 8 }}>
-      //     <Typography className="empty-state-text" color="text.secondary">
-      //       No articles found. Check back soon!
-      //     </Typography>
-      //   </Box>
-      // ) : 
       (
         // Content Display
         <Grid container spacing={3}>
@@ -132,7 +112,7 @@ const Index = () => {
             <Grid item xs={12} md={6} lg={4} key={article.id} width={"31%"}>
               <NewsCard
                 article={article}
-                onReadMore={() => {setModalOpen(true);setSelectedArticle(article)}}
+                onReadMore={() => {setModalOpen(true);setSelectedArticle(article);console.log(article)}}
               />
             </Grid>
           ))}

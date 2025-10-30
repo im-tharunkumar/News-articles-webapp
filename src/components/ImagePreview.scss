@@ -7,7 +7,7 @@
     background: white;
     margin: 0px 2px 0px 5px;
     transition: transform 0.3s cubic-bezier(0, 0.52, 0, 1) !important;
-  
+
     .title-box-flex {
       height: 43px;
       width: 100%;
@@ -26,7 +26,7 @@
         text-align: left;
       }
     }
-  
+
     .edit-text-style {
       color: var(--hti-title);
       margin-right: 5px;
@@ -42,7 +42,7 @@
     .edit-action:hover {
       background-color: rgb(226, 221, 221, 0.5);
     }
-  
+
     .key-value {
       display: flex;
       align-items: center;
@@ -68,10 +68,10 @@
       box-sizing: border-box !important;
       transition: transform 0.3s ease-out !important;
       transform: translateX(0) !important;
-  
+
       box-shadow: 0 0 15px #9c9c9c !important;
     }
-  
+
     .img-div-New {
       width: 100%;
       overflow: auto;
@@ -98,7 +98,7 @@
     #docImage {
       cursor: pointer;
     }
-  
+
     .image-zoom-area {
       display: flex;
       align-items: center;
@@ -128,7 +128,7 @@
         }
       }
     }
-  
+
     .polka-background {
       height: calc(100% - 147px);
       width: inherit;
@@ -144,43 +144,43 @@
       background-color: #dee2e6;
       margin: 0 auto;
     }
-  
+
     .loading-spinner {
       color: var(--hti-magenta);
       margin: auto;
       margin-top: 50%;
     }
-  
+
     .point-cursor {
       cursor: pointer;
     }
-  
+
     .img-overlay-wrap {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
       margin: auto;
-  
+
       img {
         display: block;
       }
-  
+
       svg {
         position: absolute;
       }
     }
-  
+
     .image-break-margin {
       margin-top: 3px;
     }
-  
+
     .preview-image {
       width: 100%;
       display: block;
       cursor: pointer;
     }
-  
+
     .no-preview {
       width: 100%;
       height: 100%;
@@ -191,10 +191,122 @@
       font-size: 16px;
       color: var(--hti-magenta);
     }
-  
+
     .no-preview-icon {
       font-size: 40px;
       margin-bottom: 10px;
     }
   }
-  
+
+
+  .title-box-flex {
+    height: 43px;
+    width : 100%;
+     background: var(--paper-title);
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+}
+
+
+
+  .edit-text-style {
+    color : var(--hti-title);
+    margin-right:5px;
+  }
+  .edit-action {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height : 30px;
+    border-right: 1px solid rgba(170, 21, 114, 0.3);;
+    padding: 0px 3px 0px 3px;
+
+
+  }
+  .edit-action:hover{
+    background-color: rgb(226, 221, 221, 0.5);
+
+  }
+
+
+  .key-value {
+      display: flex;
+      align-items: center;
+  }
+  .heading {
+    text-align: justify;
+    text-align-last: right;
+    width : 65%;
+    font-weight: 400;
+    margin-right: -15px;
+  }
+  .values {
+      text-align: justify;
+      width : 50%;
+      font-weight: 300;
+  }
+  .right-plane-width-new {
+    position: fixed;
+    z-index: 500;
+    /*overflow-y: scroll;*/
+    height: 100%;
+    width : 25%;
+    right : 0;
+    box-sizing: border-box !important;
+    transition: transform 0.3s ease-out !important;
+    transform : translateX(0) !important;
+
+    box-shadow: 0 0 15px #9c9c9c !important;
+  }
+  .rightPlaneWidth {
+    width: 22vw;
+    border-radius: 8px !important;
+    border: 1px solid lightgray;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px !important;
+    background: white;
+    margin: 0px 2px 0px 5px;
+    transition: transform .3s cubic-bezier(0, .52, 0, 1) !important;
+  }
+
+  .img-div-New{
+
+    /* margin : 30px auto auto; */
+    width : 100%;
+    overflow: auto;
+    /* border: 1px solid #e0e0e0; */
+    /* border-radius: 5px; */
+    cursor: pointer;
+    height : 72vh
+  }
+  .img-div-pdf-New{
+    /* margin : 30px auto auto; */
+    width : 100%;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    cursor: pointer;
+    height : 80vh
+  }
+  .OptionOverlap{
+    position: absolute;
+    background: #323639;
+    top: 2px;
+    right: 0px;
+    width: 3.2vw;
+    cursor: initial;
+    height: 4.5rem;
+  }
+  #docImage {
+    cursor: pointer;
+  }
+
+  .imageZoomFunDiv{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: end;
+    background-color: #323639;
+    color: white;
+    font-weight: 500;
+  }

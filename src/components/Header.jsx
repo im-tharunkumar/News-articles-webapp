@@ -67,7 +67,7 @@ const Header = ({ data, value,onChange,selectedVarient,varientOptions,handleVari
           id="demo-simple-select"
           value={selectedVarient}
           label="Combinations"
-          sx={{borderRadius:"30px", height:"50px", width:"300px"}}
+          sx={{borderRadius:"30px", height:"50px", width:"300px",background:"white"}}
           onChange={(event) => handleVarientChange(event)}
         >
           {varientOptions.map((option) => (
