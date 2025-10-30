@@ -8,10 +8,14 @@ import {
   IconButton,
   InputBase,
   Paper,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const Header = ({ data, value,onChange }) => {
+const Header = ({ data, value,onChange,selectedVarient,varientOptions,handleVarientChange  }) => {
 
 
   return (
@@ -54,6 +58,25 @@ const Header = ({ data, value,onChange }) => {
             </Button>
           </Box> */}
 
+
+          <div style={{display:"flex", marginTop:"5px"}}>
+          <FormControl >
+        <InputLabel id="demo-simple-select-label">Combinations</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={selectedVarient}
+          label="Combinations"
+          sx={{borderRadius:"30px", height:"50px", width:"300px"}}
+          onChange={(event) => handleVarientChange(event)}
+        >
+          {varientOptions.map((option) => (
+            <MenuItem value={option.value}>{option.lable}</MenuItem>
+          ))}
+
+        </Select>
+      </FormControl>
+
           {/* Right side: Search bar */}
           <Paper
             component="form"
@@ -61,11 +84,12 @@ const Header = ({ data, value,onChange }) => {
               p: "2px 4px",
               display: "flex",
               alignItems: "center",
-              width: 300,
+              width: "300px",
+              height:"44px",
               ml: 2,
               border:"1px solid lightgrey",
               boxShadow:"none",
-              borderRadius:"30px"
+              borderRadius:"30px",
             }}
             elevation={2}
           >
@@ -79,6 +103,8 @@ const Header = ({ data, value,onChange }) => {
               <SearchIcon />
             </IconButton>
           </Paper>
+          </div>
+
         </Toolbar>
       </AppBar>
 

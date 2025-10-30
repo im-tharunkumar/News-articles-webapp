@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -9,14 +9,116 @@ import {
   Divider,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import ImagePreview from "./ImagePreview";
 
+// function importAll(r) {
+//   let images = {};
+//   r.keys().map((item, index) => {
+//     images[item.replace('./', '')] = r(item);
+//   });
+//   return images;
+// }
+
+// const images = importAll(require.context('../assets/images', false, /\.(png|jpe?g)$/));
+// export const getImage = (filename) => {
+//   return images[filename] || null;
+// };
+
+const images = import.meta.glob('../assets/images/*.(png|jpg|jpeg|svg|gif)', { eager: true });
+
+// Convert to simpler object with just filenames as keys
+const imageMap = {};
+for (const path in images) {
+  // Extract filename from path (e.g., "../assets/images/logo.png" -> "logo.png")
+  const filename = path.split('/').pop();
+  imageMap[filename] = images[path].default || images[path];
+}
+
+const getImage = (filename) => {
+  return imageMap[filename] || null;
+};
+
+console.log(images)
+
+// Or as an array
+// const imageArray = importAll(require.context('./images', false, /\.(png|jpe?g|svg)$/));
 export default function ArticleModal({open, article, onClose }) {
+
+  const imageSrc = getImage(article?.filename);
+
+  if (!imageSrc) {
+    // Return fallback image or placeholder
+    return  <div>Image not found: {article?.filename}</div>;
+  }
+
+  const [scale, setScale] = useState(1); // Zoom level
+  const [rotation, setRotation] = useState(0); // Rotation angle in degrees
+
+  // Zoom in
+  const handleZoomIn = () => {
+    setScale(prev => Math.min(prev + 0.1, 3)); // Cap at 3x
+  };
+  // Zoom out
+  const handleZoomOut = () => {
+    setScale(prev => Math.max(prev - 0.1, 0.5)); // Min at 0.5x
+  };
+  // Rotate clockwise
+  const handleRotateRight = () => {
+    setRotation(prev => (prev + 90) % 360);
+  };
+  // Rotate counter-clockwise
+  const handleRotateLeft = () => {
+    setRotation(prev => (prev - 90 + 360) % 360); // Ensures positive degrees
+  };
+
+  // Reset
+  const handleReset = () => {
+    setScale(1);
+    setRotation(0);
+  };
+
+  const imageStyles = {
+    transform: `scale(${scale}) rotate(${rotation}deg)`,
+    transition: 'transform 0.3s ease',
+    maxWidth: '100%',
+    maxHeight: '100%',
+    display: 'block',
+    margin: '0 auto',
+  };
+
+  const containerStyles = {
+    width: '400px',
+    height: '100%',
+    border: '1px solid #ccc',
+    overflow: 'hidden',
+    position: 'relative',
+    backgroundColor: '#f9f9f9',
+    // display: 'flex',
+    // alignItems: 'center',
+    justifyContent: 'center',
+    // margin: '1rem auto',
+  };
+
+  const controlsStyles = {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '10px',
+    height:"50px"
+  };
+
+  const buttonStyles = {
+    padding: '5px 10px',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    cursor: 'pointer',
+  };
+
   return (
     <Dialog
       open={open}
       onClose={onClose}
       fullWidth
-      maxWidth="md"
+      maxWidth="lg"
       sx={{
         "& .MuiDialog-paper": {
           borderRadius: "12px",
@@ -86,6 +188,10 @@ export default function ArticleModal({open, article, onClose }) {
               : "rgba(0,0,0,0.8)",
         }}
       >
+                <div style={{ display: "flex"}}>
+        {/* Title */}
+
+        <div style={{width:"70%", height:"450px" , overflow:"auto"}}> 
         {/* Metadata */}
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 1 }}>
           {article?.category && (
@@ -131,7 +237,6 @@ export default function ArticleModal({open, article, onClose }) {
           )}
         </Box>
 
-        {/* Title */}
         <Typography
           variant="h4"
           sx={{
@@ -183,6 +288,27 @@ export default function ArticleModal({open, article, onClose }) {
             </Typography>
           </>
         )}
+        </div>
+        {/* <div style={containerStyles}>
+        <div style={controlsStyles}>
+        <button style={buttonStyles} onClick={handleZoomIn}>Zoom In</button>
+        <button style={buttonStyles} onClick={handleZoomOut}>Zoom Out</button>
+        <button style={buttonStyles} onClick={handleRotateLeft}>⟲ Rotate Left</button>
+        <button style={buttonStyles} onClick={handleRotateRight}>⟳ Rotate Right</button>
+        <button style={buttonStyles} onClick={handleReset}>Reset</button>
+      </div>
+        <img 
+          src={imageSrc} 
+          alt={article?.filename || "image"} 
+          style={imageStyles}
+        />
+      </div> */}
+
+      <ImagePreview handleRotateLeft={handleRotateLeft} handleRotateRight={handleRotateRight} handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} handleReset={handleReset} article={article} imageSrc={imageSrc} imageStyles={imageStyles}/>
+
+
+
+      </div>
       </DialogContent>
     </Dialog>
   );

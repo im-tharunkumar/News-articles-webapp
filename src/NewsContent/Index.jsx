@@ -14,10 +14,15 @@ import NewsCard from "../components/NewsCard";
 import { useEffect, useMemo, useState } from "react";
 import "./Styles.css"
 import Header from '../components/Header';
-import newsItems from "../assets/NewsData.json"
+import newsItems1 from "../assets/NewsData.json"
+import newsItems2 from "../assets/NewsData2.json"
+import newsItem3 from "../assets/NewsData3.json"
+import newsItem4 from "../assets/NewsData4.json"
+
 import ArticleModal from '../components/ArticleModal';
 
 const Index = () => {
+  const [mainSource, setMainSource] = useState(newsItems1); // Default to the first articles
     const [articles, setArticles] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,45 +30,56 @@ const Index = () => {
   const [modalOpen, setModalOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState("");
 
+    const [selectedVarient, setSelectedVarient] = useState(1);
 
-  // useEffect(() => {
-  //   const fetchArticles = async () => {
-  //     try {
-  //       // setLoading(true);
-  //       const response = await fetch("/api/articles");
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch articles");
-  //       }
-  //       const data = await response.json();
-  //       setNewsItems(data);
-  //     } catch (err) {
-  //       console.error("Error fetching articles:", err);
-  //       setError("Failed to load articles. Please try again later.");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+    const options =[
+      { value:1, lable:"Column Crop - OCR(vision) + LLM(4o)" },
+      { value:2, lable:"Column Crop - VLM(flash 2.0)" },
+      { value:3, lable:"Full Page - VLM(flash 2.0)" },
+      { value:4, lable:"Full Page - OCR(vision) + LLM(4o)" }
+    ]
 
-  //   fetchArticles();
-  // }, []);
+    const handleVarientChange = (event) => {
+      setSelectedVarient(event.target.value);
+    };
+
+
+
+  useEffect(() => {
+    setLoading(true);
+    if(selectedVarient === 1){
+      setMainSource(newsItems1)
+    }else if(selectedVarient === 2){
+      setMainSource(newsItems2)
+    }else if(selectedVarient === 3){
+      setMainSource(newsItem3)
+    }else if(selectedVarient === 4){
+      setMainSource(newsItem4)
+    }
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [selectedVarient]);
+
 
   const filteredNews = useMemo(() => {
-    if (!searchQuery.trim()) return newsItems;
+    if (!searchQuery.trim()) return mainSource;
     
     const query = searchQuery.toLowerCase();
-    return newsItems.filter(
+    return mainSource.filter(
       (article) =>
-        article.headline.toLowerCase().includes(query) ||
-        article.news.toLowerCase().includes(query)||
-        article.category.toLowerCase().includes(query)
+        article?.headline?.toLowerCase().includes(query) ||
+        article?.news?.toLowerCase().includes(query)||
+        article?.category?.toLowerCase().includes(query)
     );
-  }, [searchQuery]);
+  }, [searchQuery, mainSource]);
 
 
 
   return (
     <div className="min-h-screen bg-background" style={{width:"calc(100vw)"}}>
-      <Header value={searchQuery} onChange={setSearchQuery}/>
+      <Header value={searchQuery} onChange={setSearchQuery} selectedVarient={selectedVarient} varientOptions={options} handleVarientChange={handleVarientChange}/>
     <Container
       component="main"
       // maxWidth="lg"
@@ -84,11 +100,11 @@ const Index = () => {
         // <Grid container> replaces `grid`. `spacing` replaces `gap`.
         // gap-6 (1.5rem / 24px) -> spacing={3} (3 * 8px = 24px)
         <Grid container spacing={3}>
-          {[...Array(6)].map((_, i) => (
+          {[...Array(4)].map((_, i) => (
             // Grid items define column spans for different breakpoints.
             // xs=12 (1 col), md=6 (2 cols), lg=4 (3 cols)
             <Grid item xs={12} md={6} lg={4} key={i}>
-              <Card className="custom-card skeleton-card">
+              <Card className="custom-card skeleton-card" style={{width:"300px "}}>
                 {/* <Skeleton> components replace the animated pulse divs */}
                 <Skeleton variant="rectangular" width="100%" height={192} />
                 <CardContent>
