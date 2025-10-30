@@ -21,6 +21,7 @@ for (const path in images) {
   const filename = path.split('/').pop();
   imageMap[filename] = images[path].default || images[path];
 }
+console.log(imageMap)
 
 const getImage = (filename) => {
   return imageMap[filename] || null;
